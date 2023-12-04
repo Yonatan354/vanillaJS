@@ -1,0 +1,163 @@
+<html>
+
+<head>
+    <title>Data</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link href="/style.css" rel="stylesheet" type="text/css">
+
+    <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+    <script src="https://code.jquery.com/jquery-migrate-3.3.0.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.3.1/css/select.dataTables.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.5/css/responsive.dataTables.css">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <meta name="description" content="">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&amp;display=swap"
+        rel="stylesheet">
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="../assets/vendor/fonts/boxicons.css">
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="../assets/vendor/css/core.css" class="template-customizer-core-css">
+    <link rel="stylesheet" href="../assets/vendor/css/theme-default.css" class="template-customizer-theme-css">
+    <link rel="stylesheet" href="../assets/css/demo.css">
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css">
+
+    <!-- Page CSS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.4/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/plug-ins/1.10.12/sorting/datetime-moment.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.1/js/dataTables.select.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.js"></script>
+    <script src="https://luca-vercelli.github.io/DataTable-AltEditor/src/dataTables.altEditor.free.js"></script>
+    <!--https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+
+    <!-- Helpers -->
+    <script src="../assets/vendor/js/helpers.js"></script>
+    <style type="text/css">
+        .layout-menu-fixed .layout-navbar-full .layout-menu,
+        .layout-page {
+            padding-top: 0px !important;
+        }
+
+        .content-wrapper {
+            padding-bottom: 0px !important;
+        }
+
+        .datatable td span {
+            max-width: 400px;
+            max-height: 85px;
+            display: block;
+            overflow: hidden;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="layout-page">
+        <div class="content-wrapper">
+            <div class="container-xxl flex-grow-1 container-p-y">
+                <div ng-app="myApp" class="ng-scope">
+                    <h1>Pages Data</h1>
+                    <div ng-app="myApp">
+                        <div ng-controller="myCtrl">
+                            <table id="example" class="display" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>URL</th>
+                                        <th>IP</th>
+                                        <th>Country</th>
+                                        <th>Dump</th>
+                                        <th>UA</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <script>
+                            var keys = [];
+                            {{#each active}}
+                                keys.push({{@key}});
+                            {{/each}}
+                                    var app = angular.module('myApp', []);
+
+                                    app.controller('myCtrl', function ($scope) {
+
+                                        $('#example').DataTable({
+                                            "createdRow": function (row, data, dataIndex) {
+                                                if (data['passed'] !== `Y`) {
+                                                    //    $(row).addClass('blocked');
+                                                }
+                                            },
+                                            "processing": true,     // for show progress bar
+                                            "serverSide": true,     // for process server side
+                                            "filter": true,         // enable/disable search box
+                                            "orderMulti": false,    // enable/disable multiple columns at once
+                                            "ordering": true,
+                                            //"data": $scope.names,
+                                            "ajax": "/history",
+                                            "searching": true,
+                                            //campaign_id,ip,geo,passed,os,browser,ptr,reason
+                                            "columns": [
+                                                { 'data': 'id', title: 'Id', "name": "Id" },
+                                                { 'data': 'url', title: 'URL', "name": "URL" },
+                                                { 'data': 'ip', title: 'IP', "name": "IP" },
+                                                { 'data': 'country', title: 'Country', "name": "Country" },
+                                                { 'data': 'dump', title: 'Dump', "name": "Dump" },
+                                                { 'data': 'ua', title: 'UA', "name": "UA" },
+                                                {
+                                                    'data': 'date', title: 'Date Time', type: 'datetime', format: 'DD/MM/YYYY HH:mm', "name": "Accounte #", "render": function (data, type, full) {
+                                                        if (type === 'display')
+                                                            return moment(new Date(data)).locale('el').format('DD/MM/YYYY HH:mm');
+                                                        else
+                                                            return moment(new Date(data)).format('YYYY/MM/DD HH:mm:ss');
+                                                    }
+                                                },
+                                                {
+                                                    "mData": null,
+                                                    "bSortable": false,
+                                                }
+                                            ]
+                                        });
+                                    });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,minimum-scale=1">
+	<title>Config</title>
+    <!-- the form awesome library is used to add icons to our form -->
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <!-- include the stylesheet file -->
+    <link href="/style.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <div class="config">
+			<h1>Config</h1>
+			<form action="/auth" method="post">
+                <div class="config-date" >
+                    <div> 
+                        <label for="start-time">Start time:</label>
+                        <input type="date" id="start-time" name="start-time" />
+                    </div>
+                    <div>
+                        <label for="end-time">Stop time:</label>
+                        <input type="date" id="end-time" name="end-time" />
+                    </div>
+                </div>
+				<label for="redirect">
+                    % Redirect
+				</label>
+				<input type="number" name="redirect" placeholder="% Redirect" id="redirect" required>
+				<label for="country">
+                    Country
+				</label>
+				<input type="text" name="country" placeholder="Country" id="country" required>
+                <label for="url">
+                    URL
+				</label>
+				<input type="text" name="url" placeholder="URL" id="url" required>
+                <label for="url-redirect">
+                    URL Redirect
+				</label>
+				<input type="text" name="url-redirect" placeholder="URL Redirect" id="url-redirect" required>
+				<input type="submit" value="Submit">
+			</form>
+		</div>
+</body>
+
+</html>
